@@ -36,7 +36,7 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-10 pt-8">
               <Link href="/accounting" className="group block">
                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden gold-border group-hover:scale-[1.02] transition-all duration-500">
-                  <Image src="/Calculator.jpg" alt="Бухгалтерские услуги" fill sizes="50vw" className="object-cover transition-all duration-700 group-hover:scale-105" />
+                  <Image src="/calculator.jpg" alt="Бухгалтерские услуги" fill sizes="50vw" className="object-cover transition-all duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a100c]/95 via-[#1a100c]/20 to-transparent" />
                   <div className="absolute inset-0 bg-[#1a100c]/30 backdrop-blur-[2px] group-hover:backdrop-blur-[1px] transition-all duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
