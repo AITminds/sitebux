@@ -16,14 +16,14 @@ export default function HomePage() {
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[32rem] h-[32rem] bg-[radial-gradient(closest-side,rgba(213,163,41,0.05),transparent)] blur-[80px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D5A329]/25 to-transparent" />
 
-        <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-28 text-center">
+        <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-24 sm:pb-28 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE }}
             className="flex flex-col items-center gap-9 lg:gap-12"
           >
-            <h1 className="max-w-4xl text-4xl sm:text-5xl lg:text-[4.25rem] font-bold leading-[1.06] tracking-tight text-[#F3EEE7]">
+            <h1 className="max-w-4xl text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold leading-[1.06] tracking-tight text-[#F3EEE7]">
               Профессиональные <span className="gold-text">бухгалтерские</span> и <span className="gold-text">юридические</span> услуги
             </h1>
 
@@ -203,7 +203,7 @@ export default function HomePage() {
             <p className="section-subtitle mt-4">Простой и эффективный процесс сотрудничества</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { step: '1', title: 'Заявка', desc: 'Оставьте заявку или свяжитесь с нами удобным способом' },
               { step: '2', title: 'Консультация', desc: 'Бесплатная консультация и обсуждение ваших задач' },
@@ -225,7 +225,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-semibold tracking-tight text-[#F3EEE7] mb-3">{item.title}</h3>
                 <p className="text-[#A99B8C] leading-relaxed">{item.desc}</p>
                 {i < 3 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
                     <svg className="w-6 h-6 text-[#D5A329]/25" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>

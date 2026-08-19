@@ -200,7 +200,7 @@ export default function AccountingPage() {
                     {price.title}
                   </div>
                 </div>
-                <div className="gold-text text-4xl font-bold tracking-tight mb-8">{price.price}</div>
+                <div className="gold-text text-3xl lg:text-4xl font-bold tracking-tight mb-8">{price.price}</div>
                 <div className="hairline-gold mb-8" />
                 <ul className="space-y-4 text-left flex-1">
                   {price.features.map((feature, i) => (
