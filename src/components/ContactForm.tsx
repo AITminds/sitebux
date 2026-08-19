@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 
@@ -13,14 +13,31 @@ type FormData = {
 
 type ContactFormProps = {
   theme?: 'legal' | 'accounting';
+  recipientEmail: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function ContactForm(props: ContactFormProps) {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+export default function ContactForm({ theme = 'legal', recipientEmail }: ContactFormProps) {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form submitted:', data);
+    setStatus('loading');
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, theme, recipientEmail }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+
+      setStatus('success');
+      reset();
+    } catch {
+      setStatus('error');
+    }
   };
 
   const formFields = [
@@ -30,27 +47,28 @@ export default function ContactForm(props: ContactFormProps) {
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="w-full max-w-2xl mx-auto"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="relative">
-        <div className="relative bg-[#241814] rounded-[2rem] p-8 border border-[#3d322b]/50 shadow-card">
-          <div className="absolute inset-0 rounded-[2rem] bg-dark-glow pointer-events-none" />
+        <div className="relative overflow-hidden rounded-[2rem] border border-white/5 bg-[#1B0E0A]/70 backdrop-blur p-8 shadow-lux">
+          <div className="absolute inset-0 bg-dark-glow pointer-events-none" />
           <div className="relative space-y-6">
             {formFields.map((field) => (
-              <motion.div 
+              <motion.div
                 key={field.name}
                 className="relative"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="relative group">
                   <input
                     type={field.type}
-                    {...register(field.name as keyof FormData, { 
+                    {...register(field.name as keyof FormData, {
                       required: true,
                       ...(field.name === 'email' && {
                         pattern: {
@@ -65,18 +83,18 @@ export default function ContactForm(props: ContactFormProps) {
                         }
                       })
                     })}
-                    className={`w-full text-lg px-6 py-4 bg-white/[0.04] rounded-xl
-                             border transition-all duration-300 outline-none
-                             ${field.error 
-                               ? 'border-red-400/50 focus:border-red-400 hover:border-red-400/80' 
-                               : 'border-[#3d322b] hover:border-amber-400/30 focus:border-amber-400/60'}
-                             text-white placeholder-[#c4b8a8]
-                             group-hover:shadow-gold group-focus-within:shadow-gold`}
+                    className={`w-full text-lg px-6 py-4 bg-[#120907]/50 rounded-xl
+                             border transition-all duration-500 outline-none
+                             ${field.error
+                               ? 'border-red-400/50 focus:border-red-400 hover:border-red-400/80'
+                               : 'border-[#3A2418] hover:border-[#D5A329]/30 focus:border-[#D5A329]/60'}
+                             text-[#F3EEE7] placeholder-[#A99B8C]/70
+                             focus:shadow-[0_0_0_4px_rgba(213,163,41,0.08)] focus:shadow-gold`}
                     placeholder={field.placeholder}
                   />
                 </div>
                 {field.error && (
-                  <motion.p 
+                  <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="absolute text-sm text-red-400 mt-1 ml-2"
@@ -87,28 +105,28 @@ export default function ContactForm(props: ContactFormProps) {
               </motion.div>
             ))}
 
-            <motion.div 
+            <motion.div
               className="relative"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 }}
+              transition={{ duration: 0.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="relative group">
                 <textarea
                   {...register('message', { required: true })}
-                  className={`w-full text-lg px-6 py-4 bg-white/[0.04] rounded-xl
-                           border transition-all duration-300 outline-none
+                  className={`w-full text-lg px-6 py-4 bg-[#120907]/50 rounded-xl
+                           border transition-all duration-500 outline-none
                            resize-none h-32
-                           ${errors.message 
-                             ? 'border-red-400/50 focus:border-red-400 hover:border-red-400/80' 
-                             : 'border-[#3d322b] hover:border-amber-400/30 focus:border-amber-400/60'}
-                           text-white placeholder-[#c4b8a8]
-                           group-hover:shadow-gold group-focus-within:shadow-gold`}
+                           ${errors.message
+                             ? 'border-red-400/50 focus:border-red-400 hover:border-red-400/80'
+                             : 'border-[#3A2418] hover:border-[#D5A329]/30 focus:border-[#D5A329]/60'}
+                           text-[#F3EEE7] placeholder-[#A99B8C]/70
+                           focus:shadow-[0_0_0_4px_rgba(213,163,41,0.08)] focus:shadow-gold`}
                   placeholder="Сообщение"
                 />
               </div>
               {errors.message && (
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="absolute text-sm text-red-400 mt-1 ml-2"
@@ -120,15 +138,39 @@ export default function ContactForm(props: ContactFormProps) {
 
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              disabled={status === 'loading'}
               className="relative w-full py-4 text-lg font-medium overflow-hidden
-                       rounded-xl transition-shadow duration-300 group
-                       shadow-gold hover:shadow-gold-lg"
+                       rounded-xl transition-shadow duration-500 group
+                       shadow-gold hover:shadow-gold-lg
+                       disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <div className="absolute inset-0 gold-bg-warm transition-transform duration-300 group-hover:scale-[1.02]" />
-              <span className="relative text-[#1a100c] font-bold">Отправить</span>
+              <div className="absolute inset-0 gold-bg-warm transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]" />
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+              <span className="relative text-[#120907] font-bold">
+                {status === 'loading' ? 'Отправка...' : 'Отправить'}
+              </span>
             </motion.button>
+
+            {status === 'success' && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center text-emerald-300/90 font-medium"
+              >
+                Заявка отправлена! Мы свяжемся с вами в ближайшее время.
+              </motion.p>
+            )}
+            {status === 'error' && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center text-red-300/90 font-medium"
+              >
+                Не удалось отправить заявку. Попробуйте позже.
+              </motion.p>
+            )}
           </div>
         </div>
       </form>

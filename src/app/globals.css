@@ -3,41 +3,89 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-[#1a100c] text-white antialiased;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: #120907;
+    color: #F3EEE7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(213, 163, 41, 0.3);
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #120907;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2E1A11;
+    border-radius: 8px;
+    border: 2px solid #120907;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(213, 163, 41, 0.4);
   }
 
   input[type="text"],
   input[type="email"],
   input[type="tel"],
   textarea {
-    @apply mt-1 block w-full rounded-xl border-[#3d322b] bg-white/[0.06] text-white placeholder-[#c4b8a8] shadow-sm focus:border-amber-400/60 focus:ring-amber-400/20;
+    @apply mt-1 w-full rounded-xl border-[#3A2418] bg-[#120907]/60 text-[#F3EEE7] placeholder-[#A99B8C]/70 shadow-sm transition-all duration-300 focus:border-[#D5A329]/50 focus:ring-4 focus:ring-[#D5A329]/10;
   }
 
   label {
-    @apply block text-sm font-medium text-[#d9ccb8];
+    @apply block text-sm font-medium text-[#A99B8C];
   }
 }
 
 @layer utilities {
+  .bg-scene {
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -12%, rgba(213, 163, 41, 0.09) 0%, rgba(213, 163, 41, 0.03) 38%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 88% 42%, rgba(213, 163, 41, 0.05) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 8% 85%, rgba(213, 163, 41, 0.04) 0%, transparent 60%),
+      linear-gradient(180deg, #1B0E0A 0%, #120907 45%, #120907 100%);
+  }
+
+  .bg-scene::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
   .gold-text {
-    background: linear-gradient(135deg, #B7851C 0%, #D8AA3D 20%, #F5DE8B 40%, #D4A42E 60%, #B37A16 80%, #F7E3A0 100%);
+    background: linear-gradient(105deg, #B8860B 0%, #D5A329 25%, #E4BD55 45%, #F5E3AC 55%, #D5A329 75%, #B8860B 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   .gold-bg {
-    background: linear-gradient(135deg, #B7851C 0%, #D8AA3D 20%, #F5DE8B 40%, #D4A42E 60%, #B37A16 80%, #F7E3A0 100%);
+    background: linear-gradient(135deg, #B8860B 0%, #D5A329 25%, #E4BD55 50%, #D5A329 75%, #B8860B 100%);
   }
 
   .gold-bg-deep {
-    background: linear-gradient(135deg, #8B6914 0%, #B8860B 25%, #D4A42E 50%, #C9A84C 75%, #B8860B 100%);
+    background: linear-gradient(135deg, #8B6914 0%, #B8860B 30%, #D5A329 55%, #C9A84C 80%, #B8860B 100%);
   }
 
   .gold-bg-warm {
-    background: linear-gradient(135deg, #C9A84C 0%, #E8C860 25%, #FDF0B0 45%, #E0BC4A 65%, #B8860B 100%);
+    background: linear-gradient(135deg, #C9A84C 0%, #E4BD55 30%, #F5E3AC 50%, #D5A329 70%, #B8860B 100%);
   }
 
   .gold-bg-pale {
@@ -45,7 +93,7 @@
   }
 
   .gold-bg-left {
-    background: linear-gradient(90deg, #B7851C 0%, #D8AA3D 30%, #F5DE8B 50%, #D4A42E 70%, #B37A16 100%);
+    background: linear-gradient(90deg, #B8860B 0%, #D5A329 30%, #E4BD55 50%, #D5A329 70%, #B8860B 100%);
   }
 
   .gold-border {
@@ -58,26 +106,65 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, #B7851C 0%, #D8AA3D 20%, #F5DE8B 40%, #D4A42E 60%, #B37A16 80%, #F7E3A0 100%);
+    background: linear-gradient(135deg, rgba(184, 134, 11, 0.9) 0%, rgba(213, 163, 41, 0.7) 25%, rgba(229, 189, 85, 0.85) 50%, rgba(213, 163, 41, 0.7) 75%, rgba(184, 134, 11, 0.9) 100%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
   }
 
-  .card-dark {
-    @apply bg-[#241814] border border-[#3d322b]/50 rounded-2xl;
+  .hairline-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(213, 163, 41, 0.45), transparent);
+  }
+
+  .card-dark,
+  .card-dark-hover {
+    position: relative;
+    background: linear-gradient(165deg, rgba(36, 20, 13, 0.85) 0%, rgba(27, 14, 10, 0.9) 100%);
+    border: 1px solid rgba(213, 163, 41, 0.12);
+    border-radius: 1rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 24px 48px -24px rgba(0, 0, 0, 0.7);
+  }
+
+  .card-dark::before,
+  .card-dark-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(184, 134, 11, 0.9) 0%, rgba(213, 163, 41, 0.7) 25%, rgba(229, 189, 85, 0.85) 50%, rgba(213, 163, 41, 0.7) 75%, rgba(184, 134, 11, 0.9) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   .card-dark-hover {
-    @apply card-dark transition-all duration-300 hover:border-amber-400/30 hover:shadow-[0_8px_32px_rgba(183,133,28,0.08)];
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .card-dark-hover:hover {
+    transform: translateY(-6px);
+    border-color: rgba(213, 163, 41, 0.32);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 32px 64px -24px rgba(0, 0, 0, 0.8), 0 0 44px -14px rgba(213, 163, 41, 0.22);
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-white mb-4;
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: #F3EEE7;
   }
 
   .section-subtitle {
-    @apply text-lg text-[#d9ccb8] max-w-2xl mx-auto;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #A99B8C;
+    max-width: 42rem;
+    margin-inline: auto;
   }
 }
